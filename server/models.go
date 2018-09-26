@@ -1,11 +1,17 @@
 package main
 
+import (
+	"github.com/jinzhu/gorm"
+)
+
 // User represent a user model
 type User struct {
-	FirstName string `json:"firstName" validate:"required"`
-	LastName  string `json:"lastName" validate:"required"`
-	Email     string `json:"email" validate:"required"`
-	Password  string `json:"password" validate:"required"`
+	gorm.Model
+	UserID    int    `gorm:"primary_key" json:"userId"`
+	FirstName string `gorm:"not null" json:"firstName" validate:"required"`
+	LastName  string `gorm:"not null" json:"lastName" validate:"required"`
+	Email     string `gorm:"not null" json:"email" validate:"required"`
+	Password  string `gorm:"not null" json:"password" validate:"required"`
 	Phone     string `json:"phone"`
-	IsAdmin   bool   `json:"isAdmin"`
+	IsAdmin   bool   `gorm:"not null" json:"isAdmin"`
 }

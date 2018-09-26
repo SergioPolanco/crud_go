@@ -7,7 +7,7 @@ import (
 	"github.com/labstack/echo/middleware"
 )
 
-func main() {
+func startServer() {
 	server := echo.New()
 	server.Use(middleware.Logger())
 	server.Use(middleware.Recover())
@@ -22,4 +22,8 @@ func main() {
 	})
 	server.POST("/user", handleCreateUser)
 	server.Logger.Fatal(server.Start(":1323"))
+}
+
+func main() {
+	startServer()
 }

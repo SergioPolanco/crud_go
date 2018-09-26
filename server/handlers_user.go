@@ -11,10 +11,6 @@ func handleCreateUser(c echo.Context) error {
 		log.Error(err)
 		return echo.NewHTTPError(400)
 	}
-	insForm, errDB := db.Prepare("INSERT INTO user(first_name, last_name, email, password, phone, is_admin) VALUES(?,?,?,?,?,?)")
-	if errDB != nil {
-		panic(errDB.Error())
-	}
-	insForm.Exec(&user)
+
 	return c.JSON(201, user)
 }

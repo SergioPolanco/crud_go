@@ -1,19 +1,19 @@
 package main
 
 import (
-	"database/sql"
-
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-func dbConn() (db *sql.DB) {
+func dbConn() *gorm.DB {
 	dbDriver := "mysql"
 	dbUser := "root"
 	dbPass := "root"
 	dbName := "crud_go"
-	db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName)
+	db, err := gorm.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName+"?charset=utf8&parseTime=True&loc=Local")
+	// defer db.Close()
 	if err != nil {
-		panic(err.Error())
+		panic(err)
 	}
 	return db
 }
