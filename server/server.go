@@ -20,6 +20,7 @@ func startServer() {
 	server.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
+	server.GET("/users", handleListUsers)
 	server.POST("/user", handleCreateUser)
 	server.Logger.Fatal(server.Start(":1323"))
 }

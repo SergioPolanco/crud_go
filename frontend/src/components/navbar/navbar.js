@@ -1,5 +1,22 @@
 import React from 'react'
 import axios from 'axios';
+import {
+    Collapse,
+    Navbar as NavbarBootstrap,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
+} from 'reactstrap';
+
+import 'bootstrap/dist/css/bootstrap.css';
+
+let Fragment = React.Fragment;
 class Navbar extends React.Component {
     constructor(props) {
         super(props)
@@ -17,12 +34,26 @@ class Navbar extends React.Component {
         .catch((error) => {
             console.log(error)
         })
+
     }
     render() {
         return(
-            <div>
-                {this.state.mensaje}
-            </div>
+            <Fragment>
+                <NavbarBootstrap color="light" light expand="md">
+                    <NavbarBrand href="/">GO CRUD</NavbarBrand>
+                    <NavbarToggler onClick={this.toggle} />
+                    <Collapse isOpen={this.state.isOpen} navbar>
+                        <Nav className="ml-auto" navbar>
+                            <NavItem>
+                                <NavLink href="/components/">Users</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="https://github.com/reactstrap/reactstrap">Create User</NavLink>
+                            </NavItem>
+                        </Nav>
+                    </Collapse>
+                </NavbarBootstrap>
+            </Fragment>
         )
     }
 }
