@@ -1,17 +1,64 @@
 import React from 'react'
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 import Axios from 'axios';
 let Fragment = React.Fragment
 
 class UsersPage extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            users: []
+        }
+    }
     componentDidMount() {
-        Axios.get('http://localhost:1323/users')
-        .then((response) => {
-            console.log(response)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        this.getUsers()
+    }
+    getUsers = async () => {
+        let response = null
+        try {
+            response = await Axios.get('http://localhost:1323/users')
+            this.setState({
+                users: response.data
+            })
+        } catch (error) {
+            Alert.error(`Error`, {
+                position: 'bottom-right',
+                effect: 'bouncyflip',
+                timeout: 'none'
+            });
+        }
+    }
+    userRow = (user) => {
+        return(
+            <tr key={user.userId}>
+                <td>
+                    {user.userId}
+                </td>
+                <td>
+                    {user.firstName}
+                </td>
+                <td>
+                    {user.lastName}
+                </td>
+                <td>
+                    {user.email}
+                </td>
+                <td>
+                    {user.phone}
+                </td>
+                <td>
+                    {user.isAdmin.toString()}
+                </td>
+                <td>
+                    <a className='btn btn-primary' href={`/#/user/${user.userId}`}>
+                        Edit
+                    </a>    
+                </td>
+            </tr>
+        )
+    }
+    renderRows = () => {
+        return this.state.users ? this.state.users.map((x) => this.userRow(x)) : void 0
     }
     render() {
         return(
@@ -28,10 +75,11 @@ class UsersPage extends React.Component {
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Is Admin</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                        {this.renderRows()}
                     </tbody>
                 </Table>
             </Fragment>

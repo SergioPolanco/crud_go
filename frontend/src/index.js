@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import HomePage from './views/homePage'
 import UsersPage from './views/User/usersPage'
 import CreateUserPage from './views/User/createUser'
+import ModifyUserPage from './views/User/modifyUser'
 import {
     Route,
     NavLink,
@@ -52,7 +53,7 @@ class App extends React.Component {
                                     <NavLink className="nav-link" to="/users">Users</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="nav-link" to="/create-user">Create Users</NavLink>
+                                    <NavLink className="nav-link" to="/user">Create Users</NavLink>
                                 </NavItem>
                             </Nav>
                         </Collapse>
@@ -60,7 +61,8 @@ class App extends React.Component {
                     <section className="container py-5">
                         <Route exact path="/" component={HomePage} />
                         <Route exact path="/users" component={UsersPage} />
-                        <Route exact path="/create-user" component={CreateUserPage} />
+                        <Route exact path="/user" component={CreateUserPage} />
+                        <Route exact path="/user/:userID" component={ModifyUserPage} />
                     </section>
                 </Fragment>
             </HashRouter>

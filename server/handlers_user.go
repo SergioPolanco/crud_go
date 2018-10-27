@@ -14,6 +14,12 @@ func handleListUsers(c echo.Context) error {
 	return c.JSON(200, &users)
 }
 
+func handleGetUser(c echo.Context) error {
+	userID := c.Param("userID")
+	var user User
+	db.Where(&User{UserID: userID}).First(&user)
+	return c.JSON(200, user)
+}
 func handleCreateUser(c echo.Context) error {
 	var user User
 
