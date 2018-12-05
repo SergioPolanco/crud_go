@@ -21,7 +21,6 @@ class ModifyUserPage extends React.Component {
         }
     }
     componentDidMount = () => {
-        console.log(this.props)
         this.getUser()
     }
     getUser = async () => {
@@ -30,10 +29,9 @@ class ModifyUserPage extends React.Component {
             response = await Axios.get(`http://localhost:1323/user/${this.props.match.params.userID}`)
             this.setState(response.data)
         } catch (error) {
-            Alert.error(`Error`, {
+            Alert.error(error.response.data.message, {
                 position: 'bottom-right',
-                effect: 'bouncyflip',
-                timeout: 'none'
+                timeout: 5000
             });
         }
     }
@@ -112,27 +110,59 @@ class ModifyUserPage extends React.Component {
             <Form onSubmit={this.handleOnSubmit}>
                 <FormGroup>
                     <Label for="exampleEmail">First Name</Label>
-                    <Input invalid={this.state.errorsFeeback.firstName ? true: false} onChange={this.onChangeFirstNameInput}type="text" id="first_name" placeholder="Type your First Name"/>
+                    <Input
+                        invalid={this.state.errorsFeeback.firstName ? true: false}
+                        onChange={this.onChangeFirstNameInput}
+                        type="text"
+                        id="first_name"
+                        placeholder="Type your First Name"
+                        value={this.state.firstName}
+                    />
                     <FormFeedback id="feedback_first_name">{this.state.errorsFeeback.firstName}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label for="last_name">Last Name</Label>
-                    <Input invalid={this.state.errorsFeeback.lastName ? true: false} onChange={this.onChangeLastNameInput} type="text" id="last_name" placeholder="Type your Last Name" />
+                    <Input
+                        invalid={this.state.errorsFeeback.lastName ? true: false}
+                        onChange={this.onChangeLastNameInput}
+                        type="text"
+                        id="last_name"
+                        placeholder="Type your Last Name"
+                        value={this.state.lastName}
+                    />
                     <FormFeedback id="feedback_last_name">{this.state.errorsFeeback.lastName}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label for="email">Email</Label>
-                    <Input invalid={this.state.errorsFeeback.email ? true: false} onChange={this.onChangeEmailInput} type="email" id="email" placeholder="Type your Email" />
+                    <Input
+                        invalid={this.state.errorsFeeback.email ? true: false}
+                        onChange={this.onChangeEmailInput}
+                        type="email"
+                        id="email"
+                        placeholder="Type your Email"
+                        value={this.state.email}
+                    />
                     <FormFeedback id="feedback_email">{this.state.errorsFeeback.email}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label for="Phone">Phone</Label>
-                    <Input invalid={this.state.errorsFeeback.phone ? true: false} onChange={this.onChangePhoneInput} type="text" id="phone" placeholder="####-####" />
+                    <Input
+                        invalid={this.state.errorsFeeback.phone ? true: false}
+                        onChange={this.onChangePhoneInput}
+                        type="text"
+                        id="phone"
+                        placeholder="####-####"
+                        value={this.state.phone}
+                    />
                     <FormFeedback id="feedback_phone">{this.state.errorsFeeback.phone}</FormFeedback>
                 </FormGroup>
                 <FormGroup check>
                     <Label check>
-                        <Input onChange={this.onChangeIsAdminInput} type="checkbox" />{' '}
+                        <Input
+                            onChange={this.onChangeIsAdminInput}
+                            type="checkbox"
+                            checked={this.state.isAdmin}
+                        />
                         Is admin
                     </Label>
                 </FormGroup>
