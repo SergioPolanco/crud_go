@@ -1,5 +1,4 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require('path')
 
 module.exports = {
     mode: 'development',
@@ -20,24 +19,24 @@ module.exports = {
                 test: /\.(scss)$/,
                 use: [
                     {
-                        loader: 'style-loader', // inject CSS to page
+                        loader: 'style-loader',
                     },
                     {
-                        loader: 'css-loader', // translates CSS into CommonJS modules
+                        loader: 'css-loader',
                     },
                     {
-                        loader: 'postcss-loader', // Run post css actions
+                        loader: 'postcss-loader',
                         options: {
-                            plugins: function () { // post css plugins, can be exported to postcss.config.js
+                            plugins: function () {
                                 return [
                                     require('precss'),
                                     require('autoprefixer')
-                                ];
+                                ]
                             }
                         }
                     },
                     {
-                        loader: 'sass-loader' // compiles Sass to CSS
+                        loader: 'sass-loader'
                     }
                 ]
             },
@@ -55,7 +54,7 @@ module.exports = {
         ]
     },
     devServer: {
-        contentBase: path.resolve(__dirname, "./dist"),
+        contentBase: path.resolve(__dirname, './dist'),
         watchContentBase: true,
         compress: true,
     },

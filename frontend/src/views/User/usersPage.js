@@ -1,9 +1,10 @@
-import React from 'react'
-import { Table, Button } from 'reactstrap';
-import Axios from 'axios';
+import React, { Component } from 'react'
+import { Table} from 'reactstrap'
+import Axios from 'axios'
+import Alert from 'react-s-alert'
 let Fragment = React.Fragment
 
-class UsersPage extends React.Component {
+class UsersPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -21,11 +22,11 @@ class UsersPage extends React.Component {
                 users: response.data
             })
         } catch (error) {
-            Alert.error(`Error`, {
+            Alert.error('Error', {
                 position: 'bottom-right',
                 effect: 'bouncyflip',
                 timeout: 'none'
-            });
+            })
         }
     }
     userRow = (user) => {

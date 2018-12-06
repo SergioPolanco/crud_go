@@ -2,13 +2,11 @@ import React from 'react'
 import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap'
 import Axios from 'axios'
 import uuid from 'uuid'
-import Alert from 'react-s-alert';
-
-let Fragment = React.Fragment
+import Alert from 'react-s-alert'
 
 class ModifyUserPage extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             firstName: '',
             lastName: '',
@@ -26,13 +24,15 @@ class ModifyUserPage extends React.Component {
     getUser = async () => {
         let response = null
         try {
-            response = await Axios.get(`http://localhost:1323/user/${this.props.match.params.userID}`)
+            response = await Axios.get(
+                `http://localhost:1323/user/${this.props.match.params.userID}`
+            )
             this.setState(response.data)
         } catch (error) {
             Alert.error(error.response.data.message, {
                 position: 'bottom-right',
                 timeout: 5000
-            });
+            })
         }
     }
     onChangeFirstNameInput = (e) => {
@@ -78,7 +78,7 @@ class ModifyUserPage extends React.Component {
         })
     }
     handleOnSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         let data = {
             userId: uuid(),
             firstName: this.state.firstName,
@@ -91,12 +91,15 @@ class ModifyUserPage extends React.Component {
         let response = null
         try {
             response = await Axios.post('http://localhost:1323/user', data)
-            console.log(response)
-            Alert.info(`The user ${response.data.firstName} ${response.data.lastName} was been saved correctly`, {
-                position: 'bottom-right',
-                effect: 'bouncyflip',
-                timeout: 'none'
-            });
+            Alert.info(
+                // eslint-disable-next-line max-len
+                `The user ${response.data.firstName} ${response.data.lastName} was been saved correctly`, 
+                {
+                    position: 'bottom-right',
+                    effect: 'bouncyflip',
+                    timeout: 'none'
+                }
+            )
         } catch (error) {
             if (error.response) {
                 this.setState({
@@ -118,7 +121,9 @@ class ModifyUserPage extends React.Component {
                         placeholder="Type your First Name"
                         value={this.state.firstName}
                     />
-                    <FormFeedback id="feedback_first_name">{this.state.errorsFeeback.firstName}</FormFeedback>
+                    <FormFeedback id="feedback_first_name">
+                        {this.state.errorsFeeback.firstName}
+                    </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label for="last_name">Last Name</Label>
@@ -130,7 +135,9 @@ class ModifyUserPage extends React.Component {
                         placeholder="Type your Last Name"
                         value={this.state.lastName}
                     />
-                    <FormFeedback id="feedback_last_name">{this.state.errorsFeeback.lastName}</FormFeedback>
+                    <FormFeedback id="feedback_last_name">
+                        {this.state.errorsFeeback.lastName}
+                    </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label for="email">Email</Label>
@@ -142,7 +149,9 @@ class ModifyUserPage extends React.Component {
                         placeholder="Type your Email"
                         value={this.state.email}
                     />
-                    <FormFeedback id="feedback_email">{this.state.errorsFeeback.email}</FormFeedback>
+                    <FormFeedback id="feedback_email">
+                        {this.state.errorsFeeback.email}
+                    </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label for="Phone">Phone</Label>
@@ -154,7 +163,9 @@ class ModifyUserPage extends React.Component {
                         placeholder="####-####"
                         value={this.state.phone}
                     />
-                    <FormFeedback id="feedback_phone">{this.state.errorsFeeback.phone}</FormFeedback>
+                    <FormFeedback id="feedback_phone">
+                        {this.state.errorsFeeback.phone}
+                    </FormFeedback>
                 </FormGroup>
                 <FormGroup check>
                     <Label check>
@@ -168,12 +179,25 @@ class ModifyUserPage extends React.Component {
                 </FormGroup>
                 <FormGroup>
                     <Label for="password">Password</Label>
-                    <Input invalid={this.state.errorsFeeback.password ? true: false} onChange={this.onChangePasswordInput} type="password" id="password" placeholder="**********" />
-                    <FormFeedback id="feedback_password">{this.state.errorsFeeback.password}</FormFeedback>
+                    <Input
+                        invalid={this.state.errorsFeeback.password ? true: false}
+                        onChange={this.onChangePasswordInput}
+                        type="password"
+                        id="password"
+                        placeholder="**********"
+                    />
+                    <FormFeedback id="feedback_password">
+                        {this.state.errorsFeeback.password}
+                    </FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label for="confirm_password">Confirm Password</Label>
-                    <Input onChange={this.onChangeConfirmPasswordInput} type="password" id="confirm_password" placeholder="**********" />
+                    <Input
+                        onChange={this.onChangeConfirmPasswordInput}
+                        type="password"
+                        id="confirm_password"
+                        placeholder="**********"
+                    />
                     <FormFeedback id="feedback_confirm_password"></FormFeedback>
                 </FormGroup>
 
