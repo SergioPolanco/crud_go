@@ -8,7 +8,7 @@ import {
     Route,
     NavLink,
     HashRouter
-} from "react-router-dom"
+} from 'react-router-dom'
 import {
     Collapse,
     Navbar as NavbarBootstrap,
@@ -16,28 +16,28 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-} from 'reactstrap';
-import Alert from 'react-s-alert';
-import 'regenerator-runtime/runtime';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-utilities/bootstrap-utilities.css';
-import 'react-s-alert/dist/s-alert-default.css';
+} from 'reactstrap'
+import Alert from 'react-s-alert'
+import 'regenerator-runtime/runtime'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-utilities/bootstrap-utilities.css'
+import 'react-s-alert/dist/s-alert-default.css'
 
 let Fragment = React.Fragment
 
 class App extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
 
-        this.toggle = this.toggle.bind(this);
+        this.toggle = this.toggle.bind(this)
         this.state = {
             isOpen: false
-        };
+        }
     }
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
-        });
+        })
     }
     render() {
         return(

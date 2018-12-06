@@ -23,6 +23,8 @@
     "bootstrap": "^4.1.3",
     "bootstrap-utilities": "^4.1.3",
     "css-loader": "^1.0.0",
+    "mobx": "^5.7.0",
+    "mobx-react": "^5.4.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1",
