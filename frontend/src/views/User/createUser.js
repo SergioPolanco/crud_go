@@ -1,9 +1,11 @@
 import React from 'react'
 import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap'
 import Axios from 'axios'
-import uuid from 'uuid'
+// import uuid from 'uuid'
 import Alert from 'react-s-alert'
-
+import { inject, observer } from 'mobx-react'
+@inject('userStore')
+@observer
 class CreateUserPage extends React.Component {
     constructor(props) {
         super(props)
@@ -63,7 +65,6 @@ class CreateUserPage extends React.Component {
     handleOnSubmit = async (e) => {
         e.preventDefault()
         let data = {
-            userId: uuid(),
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
@@ -74,12 +75,12 @@ class CreateUserPage extends React.Component {
         let response = null
         try {
             response = await Axios.post('http://localhost:1323/user', data)
+            this.props.userStore.toggleLoading(true)
             Alert.info(
                 // eslint-disable-next-line max-len
                 `The user ${response.data.firstName} ${response.data.lastName} was been saved correctly`,
                 {
                     position: 'bottom-right',
-                    effect: 'bouncyflip',
                     timeout: 'none'
                 }
             )

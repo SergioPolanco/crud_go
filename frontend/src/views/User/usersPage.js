@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { Table} from 'reactstrap'
 import Axios from 'axios'
 import Alert from 'react-s-alert'
+import { inject, observer } from 'mobx-react'
 let Fragment = React.Fragment
-
+@inject('userStore')
+@observer
 class UsersPage extends Component {
     constructor(props) {
         super(props)
@@ -12,7 +14,8 @@ class UsersPage extends Component {
         }
     }
     componentDidMount() {
-        this.getUsers()
+        console.log(this.props)
+        this.props.userStore.getAllUsers()
     }
     getUsers = async () => {
         let response = null
@@ -59,7 +62,7 @@ class UsersPage extends Component {
         )
     }
     renderRows = () => {
-        return this.state.users ? this.state.users.map((x) => this.userRow(x)) : void 0
+        return this.props.userStore.users ? this.props.userStore.users.map((x) => this.userRow(x)) : void 0
     }
     render() {
         return(

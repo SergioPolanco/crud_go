@@ -1,6 +1,5 @@
 import { observable, action, runInAction } from 'mobx'
 import Axios from 'axios'
-
 class UserStore {
     @observable users = [];
     @observable error = false;
@@ -27,6 +26,11 @@ class UserStore {
     @action
     setUsers = users => {
         this.users = users
+    }
+
+    @action
+    toggleLoading = (status) => {
+        this.loading = status
     }
 }
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/asaskevich/govalidator"
+	"github.com/google/uuid"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 )
@@ -23,6 +24,7 @@ func handleGetUser(c echo.Context) error {
 	}
 	return c.JSON(200, user)
 }
+
 func handleCreateUser(c echo.Context) error {
 	var user User
 
@@ -36,6 +38,7 @@ func handleCreateUser(c echo.Context) error {
 		err := govalidator.ErrorsByField(err)
 		return echo.NewHTTPError(400, err)
 	}
+	user.UserID = uuid.New().String()
 	fmt.Println(result)
 	db.Create(&user)
 
