@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { Table} from 'reactstrap'
-import Axios from 'axios'
-import Alert from 'react-s-alert'
-import { inject, observer } from 'mobx-react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { getAll } from '../../actions/user.actions'
 let Fragment = React.Fragment
-@inject('userStore')
-@observer
+
 class UsersPage extends Component {
     constructor(props) {
         super(props)
@@ -14,23 +13,7 @@ class UsersPage extends Component {
         }
     }
     componentDidMount() {
-        console.log(this.props)
-        this.props.userStore.getAllUsers()
-    }
-    getUsers = async () => {
-        let response = null
-        try {
-            response = await Axios.get('http://localhost:1323/users')
-            this.setState({
-                users: response.data
-            })
-        } catch (error) {
-            Alert.error('Error', {
-                position: 'bottom-right',
-                effect: 'bouncyflip',
-                timeout: 'none'
-            })
-        }
+        this.props.dispatch(getAll())
     }
     userRow = (user) => {
         return(
@@ -54,17 +37,20 @@ class UsersPage extends Component {
                     {user.isAdmin.toString()}
                 </td>
                 <td>
-                    <a className='btn btn-primary' href={`/#/user/${user.userId}`}>
+                    <Link className='btn btn-primary' to={`/user/${user.userId}`}>
                         Edit
-                    </a>    
+                    </Link>
                 </td>
             </tr>
         )
     }
     renderRows = () => {
-        return this.props.userStore.users ? this.props.userStore.users.map((x) => this.userRow(x)) : void 0
+        return this.props.users.items ?
+            this.props.users.items.map((x) => this.userRow(x)) :
+            void 0
     }
     render() {
+        console.log(this.props)
         return(
             <Fragment>
                 <Table
@@ -91,4 +77,14 @@ class UsersPage extends Component {
     }
 }
 
-export default UsersPage
+function mapStateToProps(state) {
+    const { users } = state;
+    return {
+        users
+    };
+}
+
+const connectedApp = connect(mapStateToProps)(UsersPage);
+
+export { connectedApp as UsersPage }; 
+

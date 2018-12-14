@@ -1,15 +1,13 @@
 import React from 'react'
 import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap'
 import Axios from 'axios'
-// import uuid from 'uuid'
 import Alert from 'react-s-alert'
-import { inject, observer } from 'mobx-react'
-@inject('userStore')
-@observer
+
 class CreateUserPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            userName: '',
             firstName: '',
             lastName: '',
             email: '',
@@ -19,6 +17,12 @@ class CreateUserPage extends React.Component {
             confirmPassword: '',
             errorsFeeback: {}
         }
+    }
+    onChangeUsernameInput = (e) => {
+        let value = e.target.value
+        this.setState({
+            userName: value
+        })
     }
     onChangeFirstNameInput = (e) => {
         let value = e.target.value
@@ -65,6 +69,7 @@ class CreateUserPage extends React.Component {
     handleOnSubmit = async (e) => {
         e.preventDefault()
         let data = {
+            userName: this.state.userName,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
@@ -74,8 +79,13 @@ class CreateUserPage extends React.Component {
         }
         let response = null
         try {
-            response = await Axios.post('http://localhost:1323/user', data)
-            this.props.userStore.toggleLoading(true)
+            const requestOptions = {
+                method: 'POST',
+                url: 'http://localhost:1323/user',
+                data
+            }
+            
+            response = await Axios(requestOptions)
             Alert.info(
                 // eslint-disable-next-line max-len
                 `The user ${response.data.firstName} ${response.data.lastName} was been saved correctly`,
@@ -85,16 +95,37 @@ class CreateUserPage extends React.Component {
                 }
             )
         } catch (error) {
-            if (error.response) {
+            if (!error.response.data.Message) {
                 this.setState({
                     errorsFeeback: error.response.data
                 })
+            } else {
+                Alert.error(
+                    error.response.data.Message,
+                    {
+                        position: 'bottom-right',
+                        timeout: 'none'
+                    }
+                )
             }
         }
     }
     render() {
         return (
             <Form onSubmit={this.handleOnSubmit}>
+                <FormGroup>
+                    <Label for="username">Username</Label>
+                    <Input
+                        invalid={this.state.errorsFeeback.userName ? true: false}
+                        onChange={this.onChangeUsernameInput}
+                        type="text"
+                        id="username"
+                        placeholder="Type your Username"
+                    />
+                    <FormFeedback id="feedback_username">
+                        {this.state.errorsFeeback.userName}
+                    </FormFeedback>
+                </FormGroup>
                 <FormGroup>
                     <Label for="exampleEmail">First Name</Label>
                     <Input

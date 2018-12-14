@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
@@ -33,14 +31,33 @@ func handleCreateUser(c echo.Context) error {
 		return echo.NewHTTPError(400)
 	}
 
-	result, err := govalidator.ValidateStruct(user)
+	_, err := govalidator.ValidateStruct(user)
 	if err != nil {
 		err := govalidator.ErrorsByField(err)
 		return echo.NewHTTPError(400, err)
 	}
 	user.UserID = uuid.New().String()
-	fmt.Println(result)
-	db.Create(&user)
+
+	r := db.Create(&user)
+
+	if r.Error != nil {
+		return echo.NewHTTPError(400, r.Error)
+	}
 
 	return c.JSON(201, user)
+}
+
+func handleUserAuthenticate(c echo.Context) error {
+	var count int
+	var user User
+	username := c.Param("username")
+	password := c.Param("password")
+
+	db.Where("username = ? AND password= ?", username, password).First(&user).Count(&count)
+
+	if count == 0 {
+		return echo.NewHTTPError(400, "Username or Password incorrects")
+	}
+
+	return c.JSON(200, user)
 }

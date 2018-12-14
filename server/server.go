@@ -21,8 +21,9 @@ func startServer() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 	server.GET("/users", handleListUsers)
-	server.GET("/user/:userID", handleGetUser)
 	server.POST("/user", handleCreateUser)
+	server.GET("/user/:userID", handleGetUser)
+	server.GET("/user/authenticate", handleUserAuthenticate)
 	server.Logger.Fatal(server.Start(":1323"))
 }
 
