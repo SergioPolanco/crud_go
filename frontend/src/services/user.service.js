@@ -1,6 +1,4 @@
 import Axios from 'axios'
-import { resolve } from 'path';
-import { rejects } from 'assert';
 //import config from 'config'
 //import { authHeader } from '../helpers'
 
@@ -8,15 +6,14 @@ import { rejects } from 'assert';
 export {
     login,
     logout,
-    addUser,
     getAll
 }
 
 async function login(username, password) {
     const requestOptions = {
-        method: 'POST',
-        url: 'http://localhost:1323/users/authenticate',
-        auth: {
+        method: 'GET',
+        url: 'http://localhost:1323/user/authenticate',
+        params: {
             username,
             password
         }

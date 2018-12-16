@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Table} from 'reactstrap'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { getAll } from '../../actions/user.actions'
 let Fragment = React.Fragment
 
@@ -50,7 +50,6 @@ class UsersPage extends Component {
             void 0
     }
     render() {
-        console.log(this.props)
         return(
             <Fragment>
                 <Table
@@ -78,13 +77,13 @@ class UsersPage extends Component {
 }
 
 function mapStateToProps(state) {
-    const { users } = state;
+    const { users } = state
     return {
         users
-    };
+    }
 }
 
-const connectedApp = connect(mapStateToProps)(UsersPage);
+const connectedApp = connect(mapStateToProps)(UsersPage)
 
-export { connectedApp as UsersPage }; 
+export { connectedApp as UsersPage }
 

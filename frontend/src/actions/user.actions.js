@@ -1,5 +1,9 @@
 import { userConstants } from '../constants/user.constants'
-import { login as userLogin, getAll as getAllUsers} from '../services/user.service'
+import {
+    login as userLogin,
+    getAll as getAllUsers,
+    logout as userLogout
+} from '../services/user.service'
 import { alertActions } from './alert.actions'
 import { history } from '../helpers/history'
 
@@ -14,10 +18,9 @@ function login(username, password) {
         dispatch(request({ username }))
 
         userLogin(username, password)
-        .then(user => {
-            //localStorage.setItem('user', JSON.stringify(user))
-            console.log(user)
-            dispatch(success(user))
+        .then(response => {
+            localStorage.setItem('user', JSON.stringify(response.data))
+            dispatch(success(response.data))
             history.push('/')
         })
         .catch(error => {
@@ -46,7 +49,7 @@ function login(username, password) {
 }
 
 function logout() {
-    userService.logout()
+    userLogout()
     return {
         type: userConstants.LOGOUT
     }

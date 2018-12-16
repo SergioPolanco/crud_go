@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
@@ -50,11 +52,12 @@ func handleCreateUser(c echo.Context) error {
 func handleUserAuthenticate(c echo.Context) error {
 	var count int
 	var user User
-	username := c.Param("username")
-	password := c.Param("password")
+	username := c.QueryParam("username")
+	password := c.QueryParam("password")
 
-	db.Where("username = ? AND password= ?", username, password).First(&user).Count(&count)
+	db.Where("user_name = ? AND password= ?", username, password).First(&user).Count(&count)
 
+	fmt.Println(username)
 	if count == 0 {
 		return echo.NewHTTPError(400, "Username or Password incorrects")
 	}
