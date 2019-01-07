@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Router, Link as NavLink } from 'react-router-dom'
+import { Route, Link as NavLink } from 'react-router-dom'
 import {
     Collapse,
     Navbar as NavbarBootstrap,
@@ -16,7 +16,6 @@ import CreateUserPage from './views/User/createUser'
 import ModifyUserPage from './views/User/modifyUser'
 import { PrivateRoute } from './components/privateRoute'
 import { DropdownLogin } from './components/dropdownLogin'
-import { history } from './helpers/history'
 
 let Fragment = React.Fragment
 
@@ -60,8 +59,8 @@ class App extends React.Component {
                     <PrivateRoute exact path="/" component={HomePage} />
                     <Route exact path="/login" component={LoginPage} />
                     <Route exact path="/users" component={UsersPage} />
-                    <PrivateRoute exact path="/user" component={CreateUserPage} />
-                    <Route exact path="/user/:userID" component={ModifyUserPage} />
+                    <Route exact path="/user" component={CreateUserPage} />
+                    <PrivateRoute exact path="/user/:userID" component={ModifyUserPage} />
                 </section>
             </Fragment>
         )

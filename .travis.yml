@@ -1,0 +1,3 @@
+lenguage: go
+go:
+  - "1.11"

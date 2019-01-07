@@ -16,7 +16,7 @@ class LoginPage extends React.Component {
     componentDidMount = () => {
         this.props.dispatch(logout())
     }
-
+    
     handleChange = (e) => {
         const { name, value } = e.target
         this.setState({ [name]: value })
@@ -28,7 +28,6 @@ class LoginPage extends React.Component {
         const { dispatch } = this.props
         if (username && password) {
             dispatch(login(username, password))
-            this.props.history.push('/')
         }
         
     }
@@ -64,16 +63,18 @@ class LoginPage extends React.Component {
                     </FormFeedback>
                 </FormGroup>
 
-                <Button>Login</Button>
+                <Button type="submit">Login</Button>
             </Form>
         )
     }
 }
 
 function mapStateToProps(state) {
+    const { alert } = state.alert
     const { loggingIn } = state.authentication
     return {
-        loggingIn
+        loggingIn,
+        alert
     }
 }
 

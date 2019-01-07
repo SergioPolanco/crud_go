@@ -6,7 +6,7 @@ import {
 } from '../services/user.service'
 import { alertActions } from './alert.actions'
 import { history } from '../helpers/history'
-
+import Alert from 'react-s-alert'
 export {
     login,
     logout,
@@ -24,8 +24,15 @@ function login(username, password) {
             history.push('/')
         })
         .catch(error => {
-            dispatch(failure(error))
-            dispatch(alertActions.error(error))
+            Alert.error(
+                error.response.data.message,
+                {
+                    position: 'bottom-right',
+                    timeout: 'none'
+                }
+            )
+            dispatch(failure(error.response.data))
+            dispatch(alertActions.error(error.response.data))
         })
     }
 

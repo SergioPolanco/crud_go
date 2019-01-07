@@ -23,6 +23,7 @@ func startServer() {
 	server.GET("/users", handleListUsers)
 	server.POST("/user", handleCreateUser)
 	server.GET("/user/:userID", handleGetUser)
+	server.POST("/user/:userID", handleUpdateUser)
 	server.GET("/user/authenticate", handleUserAuthenticate)
 	server.Logger.Fatal(server.Start(":1323"))
 }
